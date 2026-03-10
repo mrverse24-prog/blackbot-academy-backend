@@ -4,14 +4,14 @@ require('dotenv').config();
 const generateToken = (userId, isAdmin = false) => {
   return jwt.sign(
     { userId, isAdmin },
-    process.env.JWT_SECRET,
+    process.env.railwayJWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || '7d' }
   );
 };
 
 const verifyToken = (token) => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET);
+    return jwt.verify(token, process.env.railwayJWT_SECRET);
   } catch (error) {
     return null;
   }
