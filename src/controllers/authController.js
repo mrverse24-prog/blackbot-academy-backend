@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) return res.status(401).json({ error: 'Invalid' });
     
-    const isAdmin = user.email === process.env.ADMIN_EMAIL;
+    const isAdmin = user.is_admin;
     const token = generateToken(user.id, isAdmin);
     
     res.json({ message: 'Login successful', user: { id: user.id, email, username: user.username, isPremium: user.is_premium, isAdmin }, token });
