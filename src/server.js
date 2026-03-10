@@ -9,14 +9,11 @@ const quizRoutes = require('./routes/quizzes');
 const progressRoutes = require('./routes/progress');
 const paymentRoutes = require('./routes/payments');
 const messagingRoutes = require('./routes/messaging');
-const adminRoutes = require('./routes/admin');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-const adminRoutes = require('./routes/adminRoutes');
-app.use('/api/admin', adminRoutes);
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Server running' });
