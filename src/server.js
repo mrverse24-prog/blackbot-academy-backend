@@ -9,6 +9,7 @@ const quizRoutes = require('./routes/quizzes');
 const progressRoutes = require('./routes/progress');
 const paymentRoutes = require('./routes/payments');
 const messagingRoutes = require('./routes/messaging');
+const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
