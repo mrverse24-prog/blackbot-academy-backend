@@ -5,8 +5,9 @@ const { getDashboard, getAllUsers, getAllCourses, createCourse, getUserProgress 
 
 // Middleware to check if user is admin
 const checkAdmin = (req, res, next) => {
+  console.log('Admin check - req.user:', req.user);
   if (!req.user || !req.user.isAdmin) {
-    return res.status(403).json({ error: 'Admin access required' });
+    return res.status(403).json({ error: 'Admin access required', user: req.user });
   }
   next();
 };
