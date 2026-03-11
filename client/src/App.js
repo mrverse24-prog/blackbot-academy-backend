@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import AdminDashboard from './components/AdminDashboard';
 import './App.css';
@@ -28,13 +30,19 @@ function App() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="App">
-      {token ? (
-        <AdminDashboard token={token} onLogout={handleLogout} />
-      ) : (
-        <Login onLoginSuccess={handleLoginSuccess} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route 
+          path="/login" 
+          element={token ? <Navigate to="/admin" /> : <Login onLoginSuccess={handleLoginSuccess} />} 
+        />
+        <Route
+          path="/admin"
+          element={token ? <AdminDashboard token={token} onLogout={handleLogout} /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </Router>
   );
 }
 

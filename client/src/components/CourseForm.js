@@ -23,7 +23,7 @@ const CourseForm = ({ token, onCourseCreated }) => {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/admin/courses`,
+        `${process.env.REACT_APP_API_URL}/api/courses`,
         {
           method: 'POST',
           headers: {
