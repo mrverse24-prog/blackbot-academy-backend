@@ -1,0 +1,44 @@
+blackbot-academy-backend/
+├── src/
+│   ├── config/
+│   │   ├── database.js
+│   │   ├── stripe.js
+│   │   └── jwt.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── Course.js
+│   │   ├── Lesson.js
+│   │   ├── Quiz.js
+│   │   ├── UserProgress.js
+│   │   ├── Certificate.js
+│   │   └── Message.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── courses.js
+│   │   ├── lessons.js
+│   │   ├── quizzes.js
+│   │   ├── progress.js
+│   │   ├── payments.js
+│   │   ├── admin.js
+│   │   ├── messaging.js
+│   │   └── certificates.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   ├── adminCheck.js
+│   │   └── errorHandler.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── courseController.js
+│   │   ├── lessonController.js
+│   │   ├── quizController.js
+│   │   ├── progressController.js
+│   │   ├── paymentController.js
+│   │   ├── adminController.js
+│   │   └── messagingController.js
+│   └── server.js
+├── .env
+├── .env.example
+├── package.json
+├── Dockerfile
+├── railway.json
+└── README.md
