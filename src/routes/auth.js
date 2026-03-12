@@ -1,9 +1,9 @@
+const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../db');
 const db = require('../config/database');
-const router = express.Router();
 
+const router = express.Router();
 const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key-change-this';
 
 router.post('/signup', async (req, res) => {
@@ -47,25 +47,22 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password required' });
     }
 
-    const result = await db.query(
-      'SELECT * FROM users WHERE email = $1',
-      [email]
-    );
+    const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+    const user = result.rows[0];
 
-    if (result.rows.length === 0) {
+    if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const user = result.rows[0];
-    const validPassword = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!validPassword) {
+    if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     const token = jwt.sign({ userId: user.id }, SECRET_KEY);
 
-    res.json({
+    res.status(200).json({
       token,
       user: {
         id: user.id,
