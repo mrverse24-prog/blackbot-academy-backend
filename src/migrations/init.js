@@ -6,7 +6,6 @@ const initDatabase = async () => {
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
         email VARCHAR(255) UNIQUE NOT NULL,
-        username VARCHAR(255) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
         first_name VARCHAR(255),
         last_name VARCHAR(255),
@@ -19,30 +18,14 @@ const initDatabase = async () => {
     `);
 
     await pool.query(`
-  CREATE TABLE IF NOT EXISTS courses (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    language VARCHAR(50) NOT NULL,
-    price DECIMAL(10, 2) DEFAULT 49.00,
-    total_lessons INTEGER,
-    duration_hours INTEGER,
-    difficulty_level VARCHAR(50),
-    instructor VARCHAR(255),
-    course_image TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  )
-`);
-
-    await pool.query(`
       CREATE TABLE IF NOT EXISTS courses (
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         description TEXT,
-        language VARCHAR(50) NOT NULL,
+        language VARCHAR(50),
         price DECIMAL(10, 2) DEFAULT 49.00,
         total_lessons INTEGER,
+        duration_hours INTEGER,
         difficulty_level VARCHAR(50),
         instructor VARCHAR(255),
         course_image TEXT,
@@ -71,7 +54,8 @@ const initDatabase = async () => {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS quizzes (
         id SERIAL PRIMARY KEY,
-        lesson_id INTEGER NOT NULL REFERENCES lessons(id) ON DELETE CASCADE,
+        course_id INTEGER REFERENCES courses(id) ON DELETE CASCADE,
+        lesson_id INTEGER REFERENCES lessons(id) ON DELETE CASCADE,
         title VARCHAR(255) NOT NULL,
         description TEXT,
         passing_score INTEGER DEFAULT 70,
@@ -84,12 +68,23 @@ const initDatabase = async () => {
       CREATE TABLE IF NOT EXISTS quiz_questions (
         id SERIAL PRIMARY KEY,
         quiz_id INTEGER NOT NULL REFERENCES quizzes(id) ON DELETE CASCADE,
-        question TEXT NOT NULL,
+        text TEXT NOT NULL,
         question_type VARCHAR(50),
         options JSONB,
         correct_answer TEXT NOT NULL,
         explanation TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS enrollments (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+        course_id INTEGER NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
+        progress INTEGER DEFAULT 0,
+        enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(user_id, course_id)
       )
     `);
 
