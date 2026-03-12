@@ -1,8 +1,7 @@
-const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
-
+const db = require('../config/database');
 const router = express.Router();
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key-change-this';
