@@ -1,0 +1,179 @@
+.course-list-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-list-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.no-courses {
+  color: #999;
+  font-size: 16px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.courses-table {
+  overflow-x: auto;
+}
+
+.courses-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.courses-table thead {
+  background: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+}
+
+.courses-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+}
+
+.courses-table td {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.courses-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* Edit Input Styles */
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #ff6b35;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #333;
+}
+
+.edit-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.edit-input:focus,
+.edit-textarea:focus {
+  outline: none;
+  border-color: #ff4500;
+  box-shadow: 0 0 5px rgba(255, 107, 53, 0.3);
+}
+
+/* Action Buttons */
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn,
+.confirm-delete-btn,
+.cancel-delete-btn {
+  padding: 8px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.edit-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #da190b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.save-btn {
+  background: #2196F3;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #0b7dda;
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background: #999;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: #777;
+  transform: translateY(-2px);
+}
+
+/* Delete Confirmation */
+.delete-confirm {
+  display: inline-block;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.delete-confirm p {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.confirm-delete-btn {
+  background: #f44336;
+  color: white;
+  margin-right: 5px;
+}
+
+.confirm-delete-btn:hover {
+  background: #da190b;
+}
+
+.cancel-delete-btn {
+  background: #999;
+  color: white;
+}
+
+.cancel-delete-btn:hover {
+  background: #777;
+}
+
+.error-message {
+  color: #f44336;
+  padding: 15px;
+  background: #ffebee;
+  border-radius: 4px;
+  border-left: 4px solid #f44336;
+}
