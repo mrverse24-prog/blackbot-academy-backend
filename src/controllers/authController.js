@@ -7,7 +7,6 @@ const registerUser = async (req, res) => {
   try {
     let { email, username, password, firstName, lastName } = req.body;
     
-    // Auto-generate username from email if not provided
     if (!username) {
       username = email.split('@')[0];
     }
@@ -35,9 +34,13 @@ const loginUser = async (req, res) => {
     if (result.rows.length === 0) return res.status(401).json({ error: 'Invalid' });
     
     const user = result.rows[0];
+    console.log('User from DB:', user);
+    console.log('is_admin value:', user.is_admin);
+    
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) return res.status(401).json({ error: 'Invalid' });
     
+    console.log('Generating token with isAdmin:', user.is_admin);
     const token = generateToken(user.id, user.is_admin);
     
     res.json({ token, user: { id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, isAdmin: user.is_admin } });
