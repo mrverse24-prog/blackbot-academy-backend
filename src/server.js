@@ -15,6 +15,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'BlackBot Academy API - Use /api/health to test' });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Server running' });
