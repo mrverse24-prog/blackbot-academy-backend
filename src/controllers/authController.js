@@ -21,7 +21,7 @@ const registerUser = async (req, res) => {
       [email, username, hashedPassword, firstName, lastName]
     );
     
-    const token = generateToken(result.rows[0].id);
+    const token = generateToken(result.rows[0].id, false);
     res.status(201).json({ message: 'Registered', user: result.rows[0], token });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -38,10 +38,9 @@ const loginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) return res.status(401).json({ error: 'Invalid' });
     
-    const isAdmin = user.is_admin;
-    const token = generateToken(user.id, isAdmin);
+    const token = generateToken(user.id, user.is_admin);
     
-    res.json({ message: 'Login successful', user: { id: user.id, email, username: user.username, isPremium: user.is_premium, isAdmin }, token });
+    res.json({ token, user: { id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name, isAdmin: user.is_admin } });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -49,7 +48,7 @@ const loginUser = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const result = await pool.query('SELECT id, email, username, first_name, last_name, is_premium FROM users WHERE id = $1', [req.userId]);
+    const result = await pool.query('SELECT id, email, username, first_name, last_name, is_premium, is_admin FROM users WHERE id = $1', [req.userId]);
     if (result.rows.length === 0) return res.status(404).json({ error: 'Not found' });
     res.json(result.rows[0]);
   } catch (error) {
