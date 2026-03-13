@@ -17,12 +17,12 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const result = await db.query(
-      'INSERT INTO users (email, password, first_name, last_name, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING id, email, first_name, last_name',
+      'INSERT INTO users (email, password, first_name, last_name, created_at) VALUES ($1, $2, $3, $4, NOW()) RETURNING id, email, first_name, last_name, is_admin',
       [email, hashedPassword, firstName, lastName]
     );
 
     const user = result.rows[0];
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY);
+    const token = jwt.sign({ userId: user.id, isAdmin: user.is_admin }, SECRET_KEY);
 
     res.status(201).json({
       token,
@@ -31,6 +31,7 @@ router.post('/signup', async (req, res) => {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
+        isAdmin: user.is_admin,
       },
     });
   } catch (err) {
@@ -60,7 +61,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const token = jwt.sign({ userId: user.id }, SECRET_KEY);
+    const token = jwt.sign({ userId: user.id, isAdmin: user.is_admin }, SECRET_KEY);
 
     res.status(200).json({
       token,
@@ -69,6 +70,7 @@ router.post('/login', async (req, res) => {
         email: user.email,
         firstName: user.first_name,
         lastName: user.last_name,
+        isAdmin: user.is_admin,
       },
     });
   } catch (err) {
